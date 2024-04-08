@@ -4,3 +4,6 @@ python3 -m venv .venv
 
 #进入虚拟环境
 . .venv/bin/activate
+
+#写数据
+curl http://localhost:5000/api/v2/todo/1 -d "data=Remember the milk" -X PUT       

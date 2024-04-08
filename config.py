@@ -1,0 +1,7 @@
+
+class Config:
+    SECRET_KEY = 'key string'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///dev-data.db'
+    SQLALCHEMY_COMMIT_TEARDOWN = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_COMMIT_ON_TEARDOWN = True
