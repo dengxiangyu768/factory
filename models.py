@@ -21,7 +21,7 @@ class Todo(db.Model):
 
 class Progress(db.Model):
     id = db.Column(db.Integer,primary_key=True) 
-    name = db.Enum('冲压', '焊接', '涂装', '总装', '完成')
+    name = db.Column(db.Enum('冲压', '焊接', '涂装', '总装', '完成'))
    
     create_timestamp = db.Column(db.String(20), nullable=False)
     modify_timestamp = db.Column(db.String(20))
