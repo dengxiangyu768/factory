@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask import request
 from models import Todo,Progress
-import json
+import time
 
 
 
@@ -45,7 +45,7 @@ class ProgressObject(Resource):
         print(data)
         if not data:
             return {"error": "no input data provided"},404
-        progress = Progress(name=data["name"],create_time="2024-04-08 16:00:12.969458",modify_time="2024-04-08 16:00:12.969458")
+        progress = Progress(name=data["name"],create_timestamp=str(int(time.time())))
         progress.save()
         return progress.to_dict()
         

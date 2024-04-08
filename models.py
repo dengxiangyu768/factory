@@ -22,11 +22,11 @@ class Todo(db.Model):
 class Progress(db.Model):
     id = db.Column(db.Integer,primary_key=True) 
     name = db.Column(db.String(100),nullable=False)
-    create_time = db.Column(db.DateTime, default=datetime.datetime.now)
-    modify_time = db.Column(db.DateTime, default=datetime.datetime.now)
+    create_timestamp = db.Column(db.String(20), nullable=False)
+    modify_timestamp = db.Column(db.String(20))
 
     def to_dict(self):
-        return {"id":self.id,"name": self.name,"create_time": self.create_time,"modify_time": self.modify_time}
+        return {"id":self.id,"name": self.name,"create_timestamp": self.create_timestamp,"modify_timestamp": self.modify_timestamp}
     
     def save(self):
         db.session.add(self)
