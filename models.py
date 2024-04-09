@@ -22,9 +22,9 @@ class Todo(db.Model):
 class Progress(db.Model):
     id = db.Column(db.Integer,primary_key=True) 
     name = db.Column(db.Enum('冲压', '焊接', '涂装', '总装', '完成'))
-   
-    create_timestamp = db.Column(db.String(20), nullable=False)
-    modify_timestamp = db.Column(db.String(20))
+    create_timestamp = db.Column(db.Integer, nullable=False)
+    completion_timestamp = db.Column(db.Integer)
+    duration = db.Column(db.Integer)
     product_id = db.Column(db.Integer,db.ForeignKey("product.id"))
 
     def to_dict(self):
@@ -38,13 +38,19 @@ class Progress(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    
+
 class Product(db.Model):
     id = db.Column(db.Integer,primary_key=True) 
     name = db.Column(db.String(100),nullable=False)
-
-    create_timestamp = db.Column(db.String(20), nullable=False)
-    completion_timestamp = db.Column(db.String(20))
-    progress_id = db.relationship("Progress",backref="product",lazy="dynamic")
+    model_of_car = db.Column(db.Enum('轻卡', '特种车', '救护车')) 
+    vin = db.Column(db.String(30),nullable=False)
+    eni= db.Column(db.String(30),nullable=False)
+    create_timestamp = db.Column(db.Integer, nullable=False)
+    completion_timestamp = db.Column(db.Integer)
+    duration = db.Column(db.Integer)
+    status =  db.Column(db.Enum('生产中', '完成'))
+    progress = db.relationship("Progress",backref="product",lazy="dynamic")
 
 
     def to_dict(self):
@@ -57,6 +63,13 @@ class Product(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+    def create_all_progress(self):
+        for element in ['冲压', '焊接', '涂装', '总装', '完成']:
+            progress = Progress(name=element,product_id=self.id)
+            db.sesion.add(progress)
+            db.session.commit()
+            
 
 # class User(db.Model):
     
