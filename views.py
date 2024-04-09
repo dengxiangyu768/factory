@@ -30,7 +30,7 @@ class ProductObject(Resource):
     def get(self,id=None):
         if id:
             product = Product.query.get(id)
-            if not product:
+            if product is None:
                 return {'error':'id not found'}, 404
             return product.to_dict()
         else:
