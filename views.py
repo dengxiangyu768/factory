@@ -27,7 +27,6 @@ class TodoObject(Resource):
         return {"message": "add sucess"}
     
 class ProductObject(Resource):
-
     def get(self,id=None):
         if id:
             product = Product.query.get(id)
@@ -43,10 +42,11 @@ class ProductObject(Resource):
         data = request.get_json()
         if data is None:
             return {"error": "no input data provided"},404
-        product = product(name=data["name"],model_of_car=data["model_of_car"],
+        product = Product(name=data["name"],model_of_car=data["model_of_car"],
                           vin=data["vin"],eni=data["eni"],create_timestamp=int(time.time())
                           )
         product.save()
+        product.create_all_progress()
         return product.to_dict()
     
     def put(self,id):
@@ -73,7 +73,7 @@ class ProgressObject(Resource):
         print(data)
         if not data:
             return {"error": "no input data provided"},404
-        progress = Progress(name=data["name"],create_timestamp=str(int(time.time())))
+        progress = Progress(name=data["name"],create_timestamp=int(time.time()))
         progress.save()
         return progress.to_dict()
         

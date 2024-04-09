@@ -3,7 +3,7 @@ from flask_restful import Api
 from models import db
 from config import Config
 
-from views import TodoObject,ProgressObject
+from views import TodoObject,ProgressObject,ProductObject
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -15,6 +15,8 @@ with app.app_context():
 api = Api(app)
 api.add_resource(TodoObject,'/api/v2/todos','/api/v2/todo/<int:id>')
 api.add_resource(ProgressObject,'/api/v2/progress','/api/v2/progress/<int:id>')
+api.add_resource(ProductObject,'/api/v2/products','/api/v2/product','/api/v2/product/<int:id>')
+
 
 
 

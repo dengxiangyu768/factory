@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 import datetime
+import time
 
 db = SQLAlchemy()
 
@@ -28,7 +29,7 @@ class Progress(db.Model):
     product_id = db.Column(db.Integer,db.ForeignKey("product.id"))
 
     def to_dict(self):
-        return {"id":self.id,"name": self.name,"create_timestamp": self.create_timestamp,"modify_timestamp": self.modify_timestamp}
+        return {"id":self.id,"name": self.name,"create_timestamp": self.create_timestamp}
     
     def save(self):
         db.session.add(self)
@@ -54,7 +55,7 @@ class Product(db.Model):
 
 
     def to_dict(self):
-        return {"id":self.id,"name": self.name,"create_timestamp": self.create_timestamp,"modify_timestamp": self.modify_timestamp}
+        return {"id":self.id,"name": self.name,"create_timestamp": self.create_timestamp}
     
     def save(self):
         db.session.add(self)
@@ -66,8 +67,8 @@ class Product(db.Model):
 
     def create_all_progress(self):
         for element in ['冲压', '焊接', '涂装', '总装', '完成']:
-            progress = Progress(name=element,product_id=self.id)
-            db.sesion.add(progress)
+            progress = Progress(name=element,product_id=self.id,create_timestamp=int(time.time()))
+            db.session.add(progress)
             db.session.commit()
             
 
